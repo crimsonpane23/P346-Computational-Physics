@@ -391,12 +391,11 @@ def Cholesky_solve(A,b):
     
     #Forward substitution
     y = []
-    y.append(b[0][0])
-    for i in range(1,n):
+    for i in range(n):
         sum3 = 0
         for j in range(i):
             sum3 += L_lower[i][j]*y[j]
-        y.append(b[i][0] - sum3)
+        y.append((b[i][0] - sum3)/L[i][i])
     
     #Backward Substitution
     X = []
