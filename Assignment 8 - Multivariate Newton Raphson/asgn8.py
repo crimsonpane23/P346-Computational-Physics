@@ -91,13 +91,13 @@ def Multi_Newt_Raphson(F, J, x0, epsilon=10**(-6)):
     
 print(Multi_Newt_Raphson(F,J,[5,5,5]))
 print(itr1)
-
-#There is a problem in my GJElimination code which was pointed out earlier which might be the reason for the slow convergence of Newton Raphson method. 
-#I will try to fix that 
+print('Newton Raphson converges faster than Fixed point iteration method')
+#There was a problem in my GJInverse code earlier whihc i have fixed, it was giving transpose of the inverse matrix of A
 
 '''
 [6.000000244759765, 0.9999994315904682, -3.999995926064018]
 10
-[6.0000005853378315, 0.9999978537686459, -4.000002087150953]
-35
+[5.9999999999995834, 1.0000000000050626, -4.000000000004646]
+5
+Newton Raphson converges faster than Fixed point iteration method
 '''

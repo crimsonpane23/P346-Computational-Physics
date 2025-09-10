@@ -234,7 +234,7 @@ def GJElimination(A, b):
         max_row = K[i]
         max_row_index = i
         for a in range(i,n):
-            if K[a] >= max_row:
+            if abs(K[a]) > abs(max_row):
                 max_row = K[a]
                 max_row_index = a
             
@@ -260,26 +260,23 @@ def GJElimination(A, b):
     for j in range(n):
         out.append(aug[j][n])
     return(out)
-            
+
 def GJInverse(A):
-    #Step 1: Make an identity matrix
     n = len(A)
-    I = [[0.0 for i in range(n)] for j in range(n)]
+    I = [[1 if i == j else 0 for j in range(n)] for i in range(n)]
+
+    # Initialize the inverse matrix with zeros
+    A_inv = [[0.0 for _ in range(n)] for _ in range(n)]
+
     for i in range(n):
+        b0 = [[I[j][i]] for j in range(n)]  
+        v = GJElimination(A, b0)            
+
+        # Place solution vector v as the i-th column of the inverse
         for j in range(n):
-            if i == j:
-                I[i][j] += 1
-    
-    #Step 2: Apply GJElimination for A with all columns of I one by one and merge them to form A inverse
-    Final = []
-    for i in range(n):
-        b0 = []
-        for j in range(n):
-            b0.append([I[i][j]])
-        v = GJElimination(A, b0)
-        Final.append(v)
-    
-    return Final
+            A_inv[j][i] = v[j]
+
+    return A_inv
 
 def LUDecomposition(A):
     #The decomposition technique uses Doolittle calculations
