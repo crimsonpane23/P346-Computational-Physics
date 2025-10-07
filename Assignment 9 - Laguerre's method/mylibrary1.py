@@ -33,22 +33,7 @@ class MyComplex():
     def mod_complex(self):
         return np.sqrt(self.r**2 + self.i**2)
 
-def shape(M):
-        rows = len(M)
-        cols = len(M[0])
-        return (rows, cols)
 
-def read_matrix(filename):
-        matrix = []
-        with open(filename, 'r') as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue
-                row = [float(x) for x in line.split()]
-                matrix.append(row)
-        return matrix
-    
 def make_GP(num, start, cr):
         L = []
         val = start
@@ -57,7 +42,7 @@ def make_GP(num, start, cr):
             val = val * cr
         return L
 
-
+    
 def make_AP(num, start, cd):
         L = []
         val = start
@@ -66,7 +51,7 @@ def make_AP(num, start, cd):
             val = val + cd
         return L
 
-    
+  
 def make_HP(num, start, cd):
         L = []
         val = start
@@ -92,15 +77,19 @@ def RandomLCG(num, a=1103515245, c=12345, m=32768):
 
         return L
 
- 
+
+
 def fact(n):
         if n == 0 or n == 1:
             return 1
         else:
-            return n * fact(n - 1)
+            return n *fact(n - 1)
+
 
 def is_odd(n):
         return (n % 2) != 0
+        
+
 
 def dot_product(A, B):
     d = 0
@@ -160,7 +149,7 @@ def correlation_test(k, L):
     term1 = term1/len(L)
 
     term2 = 0
-    for i in range(len(L)):
+    for i in range(k,len(L)):
         term2 += L[i]
     term2 = term2/len(L)
     term2 = term2*term2
@@ -178,6 +167,34 @@ def read_matrix(filename):
                 row = [float(x) for x in line.split()]
                 matrix.append(row)
         return matrix
+
+def determinant(matrix):
+    # Recursive function to find the determinant of a matrix
+    n = len(matrix)
+
+    if n == 1:
+        return matrix[0][0]
+
+    if n == 2:
+        return matrix[0][0]*matrix[1][1] - matrix[0][1]*matrix[1][0]
+
+    det = 0
+    for c in range(n):
+        # Minor: matrix excluding first row and current column
+        minor = [row[:c] + row[c+1:] for row in matrix[1:]]
+        det += ((-1)**c) * matrix[0][c] * determinant(minor)
+    return det
+
+def is_invertible(matrix):
+    """Check if the given square matrix is invertible (determinant ≠ 0)."""
+    # Must be square
+    if len(matrix) != len(matrix[0]):
+        return False
+
+    det = determinant(matrix)
+    if det == 0:
+        return False
+    return True
 
 
 def GJElimination(A, b):
@@ -548,7 +565,7 @@ def Fixed_point_root_find(f, g, x0 = 2.5, epsilon = 10**(-6)):
     x = g(x0)
     return Fixed_point_root_find(f, g, x)
 
-
+######################################## DONT USE THE CODE BELOW, (OLD NOTATION) #######################################################
 def poly_derivative(p):
     n = len(p)
     dp = []
@@ -572,3 +589,85 @@ def polynomial_eval(L,x):
     for i in range(n):
         eval += L[i]*(x**i)
     return eval
+
+####################################################### UPDATED CODE FOR NEW NOTATION #####################################################
+def poly_eval(p, x):
+    """Evaluate polynomial p(x) = a0*x^n + a1*x^(n-1) + ... + an."""
+    result = 0
+    n = len(p)
+    for i in range(n):
+        result += p[i] * (x ** (n - i - 1))
+    return result
+
+def poly_derivative(p):
+    """Return first derivative coefficients."""
+    n = len(p)
+    dp = []
+    for i in range(n - 1):
+        dp.append(p[i] * (n - i - 1))
+    return dp
+
+def poly_second_derivative(p):
+    """Return second derivative coefficients."""
+    n = len(p)
+    d2p = []
+    for i in range(n - 2):
+        d2p.append(p[i] * (n - i - 1) * (n - i - 2))
+    return d2p
+
+def laguerre_root(p, x0=1, epsilon=1e-6, max_iter=1000):
+    """Find one real root of polynomial p using Laguerre's method (loop version)."""
+    n = len(p) - 1  # degree
+
+    x = x0
+    for _ in range(max_iter):
+        f = poly_eval(p, x)
+        if abs(f) < epsilon:
+            return x
+
+        f1 = poly_eval(poly_derivative(p), x)
+        f2 = poly_eval(poly_second_derivative(p), x)
+
+        G = f1 / f
+        H = G * G - f2 / f
+        D_term = (n - 1) * (n * H - G * G)
+
+        if D_term < 0:
+            D_term = 0  # clamp negative sqrt
+
+        D = math.sqrt(D_term)
+
+        denom1 = G + D
+        denom2 = G - D
+        denom = denom1 if abs(denom1) > abs(denom2) else denom2
+        if denom == 0:
+            break
+
+        a = n / denom
+        x_new = x - a
+
+        if abs(x_new - x) < epsilon:
+            return x_new
+
+        x = x_new
+
+    return x  # return best estimate if max_iter reached
+
+def deflate(p, root):
+    """Perform synthetic division of p(x) by (x - root)."""
+    n = len(p)
+    q = [p[0]]
+    for i in range(1, n):
+        q.append(p[i] + root * q[-1])
+    q.pop()  # remove remainder
+    return q
+
+def laguerre_all_roots(p, x0=1, epsilon=1e-6):
+    """Find all real roots of polynomial using Laguerre's method with deflation."""
+    roots = []
+    poly = p[:]
+    while len(poly) > 1:
+        root = laguerre_root(poly, x0, epsilon)
+        roots.append(round(root, 6))
+        poly = deflate(poly, root)
+    return roots
