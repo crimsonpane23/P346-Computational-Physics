@@ -552,7 +552,6 @@ def Regula_falsi(f, a, b, epsilon = 10**(-6), delta = 10**(-6)):
     return Regula_falsi(f, a, b)
 
 
-
 itr_Newton_raphson = 0
 def Newton_Raphson(f, df, x0 = 0, epsilon = 10**(-6)):
     global itr_Newton_raphson
