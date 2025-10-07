@@ -33,33 +33,12 @@ class MyComplex():
     def mod_complex(self):
         return np.sqrt(self.r**2 + self.i**2)
 
-
-class MyMatrix:
-
-    @staticmethod
-    def shape(M):
+def shape(M):
         rows = len(M)
         cols = len(M[0])
         return (rows, cols)
 
-    @staticmethod
-    def matrix_multiply(A, B):
-        a_rows, a_cols = MyMatrix.shape(A)
-        b_rows, b_cols = MyMatrix.shape(B)
-        if a_cols != b_rows:
-            raise ValueError("Given matrices cannot be multiplied: incompatible dimensions")
-
-        # initialize a zero matrix 
-        result = [[0.0 for _ in range(b_cols)] for _ in range(a_rows)]
-        for i in range(a_rows):
-            for k in range(a_cols):
-                aik = A[i][k]
-                for j in range(b_cols):
-                    result[i][j] += aik * B[k][j]  #Add each desired element zero matrix
-        return result
-
-    @staticmethod
-    def read_matrix(filename):
+def read_matrix(filename):
         matrix = []
         with open(filename, 'r') as f:
             for line in f:
@@ -69,12 +48,8 @@ class MyMatrix:
                 row = [float(x) for x in line.split()]
                 matrix.append(row)
         return matrix
-
-
-class MySeq:
-
-    @staticmethod
-    def make_GP(num, start, cr):
+    
+def make_GP(num, start, cr):
         L = []
         val = start
         while len(L) < num:
@@ -82,8 +57,8 @@ class MySeq:
             val = val * cr
         return L
 
-    @staticmethod
-    def make_AP(num, start, cd):
+
+def make_AP(num, start, cd):
         L = []
         val = start
         while len(L) < num:
@@ -91,8 +66,8 @@ class MySeq:
             val = val + cd
         return L
 
-    @staticmethod
-    def make_HP(num, start, cd):
+    
+def make_HP(num, start, cd):
         L = []
         val = start
         while len(L) < num:
@@ -100,15 +75,15 @@ class MySeq:
             val = val + cd
         return L
     
-    @staticmethod
-    def sum_list(L):
+    
+def sum_list(L):
         s = 0.0
         for x in L:
             s += x
         return s
     
-    @staticmethod
-    def RandomLCG(num, a=1103515245, c=12345, m=32768):
+
+def RandomLCG(num, a=1103515245, c=12345, m=32768):
         x = 0.11
         L = []
         for i in range(num):
@@ -117,21 +92,15 @@ class MySeq:
 
         return L
 
-
-class MyNum:
-
-    @staticmethod
-    def fact(self, n):
+ 
+def fact(n):
         if n == 0 or n == 1:
             return 1
         else:
-            return n * self.fact(n - 1)
+            return n * fact(n - 1)
 
-    @staticmethod
-    def is_odd(self, n):
+def is_odd(n):
         return (n % 2) != 0
-        
-
 
 def dot_product(A, B):
     d = 0
