@@ -667,3 +667,33 @@ def laguerre_all_roots(p, x0=1, epsilon=1e-6):
         roots.append(round(root, 6))
         poly = deflate(poly, root)
     return roots
+
+
+def Midpoint_int(f,a,b,N):
+    h = (b-a)/N
+    L = []     #List of midpoints
+    for i in range(N):
+        x = (a + i*h + a + (i+1)*h)/2
+        L.append(x)
+
+    #Sum function evaluation on these points
+    m = 0
+    for i in range(len(L)):
+        m += f(L[i])*h
+    
+    return m
+
+def Trapezoidal_int(f,a,b,N):
+    h = (b-a)/N
+    L = []     #List of endpoints of each interval (basically Partition set)
+    for i in range(N):
+        x = a + i*h
+        L.append(x)
+    L.append(b)
+
+    #Summing areas of each trapezoid
+    t = 0
+    for i in range(N):
+        t += (f(L[i]) + f(L[i+1]))*h/2 
+    return t
+
