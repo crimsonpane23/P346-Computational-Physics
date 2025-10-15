@@ -127,13 +127,20 @@ M = [[0.2, -5, 3, 0.4, 0],
      [3, 0.8, 2, -0.4, 3],
      [0.5, 3, 2, 0.4, 1]]
 
-LUDecomposition(M)
+x1 = LUSolve(M,[[1],[0],[0],[0],[0]])
+x2 = LUSolve(M,[[0],[1],[0],[0],[0]])
+x3 = LUSolve(M,[[0],[0],[1],[0],[0]]) 
+x4 = LUSolve(M,[[0],[0],[0],[1],[0]])
+x5 = LUSolve(M,[[0],[0],[0],[0],[1]])  
 
-for i in range(5):
-    for j in range(5):
-        M[i][j] = float(np.round(M[i][j],3))
-    
-print('LU Decomposed matrix of M (rounded of to 3 decimal places):',M)
+Inv = [[x1[0],x2[0],x3[0],x4[0],x5[0]],
+       [x1[1],x2[1],x3[1],x4[1],x5[1]],
+       [x1[2],x2[2],x3[2],x4[2],x5[2]],
+       [x1[3],x2[3],x3[3],x4[3],x5[3]],
+       [x1[4],x2[4],x3[4],x4[4],x5[4]]]
+
+print(Inv)
+
 
 #Question 4
 print('')
