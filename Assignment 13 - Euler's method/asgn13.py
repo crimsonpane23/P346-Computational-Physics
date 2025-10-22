@@ -2,6 +2,7 @@
 Name - Aryan Shrivastava
 Roll no. - 2311041
 Assignment - 13: Euler's method and Predictor Corrector
+Date - 22/10/25
 '''
 
 from mylibrary1 import *
@@ -46,8 +47,6 @@ plt.title("Euler's Method vs Analytic Solution for dy/dx = (x+y)^2")
 plt.legend()
 plt.grid()
 plt.show()
-
-
 
 #For 1st Function
 P2, Q2 = ODE_Predictor_corrector(f1, 0, 2, 0.1, 0, 0)
@@ -97,7 +96,4 @@ plt.title("Comparing methods for dy/dx = y - x^2")
 plt.legend()
 plt.grid()
 plt.show()
-
-
-
 
