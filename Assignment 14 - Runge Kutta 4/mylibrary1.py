@@ -813,3 +813,65 @@ def forward_Euler(f, a, b, h, x0, y0):
     for i in range(N+1):
         L.append(a + i * h)
     return y, L
+
+
+def ODE_rk4(f, x0, y0, h, a, b):
+    x = x0
+    y = y0
+    L_x = [x0]
+    L_y = [y0]
+    n = int(((b-a)/h))
+
+    for i in range(n):
+        k1 = h * f(y,x)
+        k2 = h * f(y + k1/2, x + h/2)
+        k3 = h * f(y + k2/2,x + h/2)
+        k4 = h * f(y + k3, x + h)
+        
+        y += (k1 + 2*k2 + 2*k3 + k4) / 6
+        x += h
+        
+        L_x.append(x)
+        L_y.append(y)
+    
+    return L_x, L_y
+
+def ODE_plot_data(X,Y):
+    n = len(X)
+    P = []
+    for i in range(n):
+        P.append((X[i], Y[i]))
+    return P
+
+
+def ODE_coupled_2(f_x,f_v,x0,v0,t0,h,a,b):
+    v = v0
+    x = x0
+    x = x0
+    t = t0
+    L_x = [x0]
+    L_v = [v0]
+    L_t = [t0]
+    n = int(((b-a)/h))
+
+    for i in range(n):
+        k1x = h*f_x(v,x,t)
+        k1v = h*f_v(v,x,t)
+
+        k2x = h*f_x(v + k1v/2, x+k1x/2, t+h/2)
+        k2v = h*f_v(v + k1v/2, x+k1x/2, t+h/2)
+
+        k3x = h*f_x(v + k2v/2, x+k2x/2, t+h/2)
+        k3v = h*f_v(v + k2v/2, x+k2x/2, t+h/2)
+
+        k4x = h*f_x(v + k3v/2, x+k3x/2, t+h/2)
+        k4v = h*f_v(v + k3v/2, x+k3x/2, t+h/2)
+
+        x += (k1x + 2*k2x + 2*k3x + k4x)/6
+        v += (k1v + 2*k2v + 2*k3v + k4v)/6
+        t += h
+        L_x.append(x)
+        L_v.append(v)
+        L_t.append(t)
+
+    return L_x, L_v, L_t
