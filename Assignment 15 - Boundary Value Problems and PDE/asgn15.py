@@ -90,11 +90,11 @@ V2 = V[200]
 V3 = V[-1]
 V4 = V[5]
 
-plt.plot(T,V0, label="PDE at t=0")
-plt.plot(T,V4, label="PDE at t=0.01")
-plt.plot(T,V1, label="PDE at t=0.1")
-plt.plot(T,V2, label="PDE at t=1")
-plt.plot(T,V3, label="PDE at t=2")
+plt.plot(X,V0, label="PDE at t=0")
+plt.plot(X,V4, label="PDE at t=0.01")
+plt.plot(X,V1, label="PDE at t=0.1")
+plt.plot(X,V2, label="PDE at t=1")
+plt.plot(X,V3, label="PDE at t=2")
 plt.xlabel('Position (x)')
 plt.ylabel('Temperature (T)')
 plt.title("PDE solution evolution with time")
