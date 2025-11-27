@@ -44,6 +44,8 @@ for t in range(N):
 
 plt.scatter(Time, no_l, color='r', label='no of points in the left half')
 plt.scatter(Time, no_r, color='b', label='no of points in the right half')
+plt.xlabel('Time')
+plt.ylabel('Number of particles')
 plt.grid(True)
 plt.legend()
 plt.title('Number of particles in each side variation with time')
