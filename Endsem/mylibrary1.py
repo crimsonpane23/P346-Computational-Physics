@@ -828,7 +828,7 @@ def ODE_rk4(f, x0, y0, h, a, b):
         k3 = h * f(y + k2/2,x + h/2)
         k4 = h * f(y + k3, x + h)
         
-        y += (k1 + 2*k2 + 2*k3 + k4) / 6
+        y += (k1 + 2*k2 + 2*k3 + k4)/6
         x += h
         
         L_x.append(x)
@@ -881,6 +881,7 @@ def PDE_HeatEqn_Solve(g,t_0,t_f,x_0,x_l,h_x,h_t):
     T = []
     N = int((x_l-x_0)/h_x)
     T_n = int((t_f - t_0)/h_t)
+    print(T_n)
     for i in range(N+1):
         X.append(x_0 + i*h_x)
         T.append(t_0 + i*h_t)
